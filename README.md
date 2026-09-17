@@ -1,4 +1,4 @@
-# ByteBank
+# ByteBank v2
 
 ## Integrantes
 
@@ -17,8 +17,13 @@ diferentes, acessar uma delas pelo numero e transferir dinheiro entre elas por P
 usando a chave pix como identificador do destino. No nivel 3 cada conta ganha um
 extrato e uma fila de boletos.
 
-Todo o codigo fica em um unico arquivo `main.py`, organizado em funcoes pequenas: as
-funcoes de conta, as operacoes, o extrato, os boletos e os dois menus.
+Na v2 o codigo foi separado em arquivos por assunto, cada um com funcoes pequenas:
+
+- `main.py` - os menus e a execucao do programa
+- `banco.py` - a lista de contas, o cadastro, a busca por chave ou numero e o extrato
+- `entrada.py` - a leitura e validacao dos valores digitados
+- `operacoes.py` - deposito, saque, pix, extrato e estorno
+- `boletos.py` - a fila de boletos
 
 ## Funcionalidades
 
