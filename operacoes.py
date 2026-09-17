@@ -1,5 +1,8 @@
 from banco import buscar_por_chave, registrar
-from entrada import ler_valor
+from entrada import escolher_categoria, ler_valor
+from pontos import creditar_pontos, debitar_pontos
+
+ESTORNAVEIS = ["deposito", "saque", "pix", "boleto"]
 
 
 def depositar(conta):
@@ -18,9 +21,13 @@ def sacar(conta):
     if valor > conta["saldo"]:
         print("Saldo insuficiente.")
         return
+    categoria = escolher_categoria()
+    if categoria is None:
+        return
     conta["saldo"] -= valor
-    registrar(conta, "saque", valor, None)
-    print(f"Saque de R$ {valor:.2f} realizado. Saldo: R$ {conta['saldo']:.2f}")
+    registrar(conta, "saque", valor, None, categoria)
+    creditar_pontos(conta, valor)
+    print(f"Saque de R$ {valor:.2f} em {categoria}. Saldo: R$ {conta['saldo']:.2f}")
 
 
 def pix(conta):
@@ -37,9 +44,13 @@ def pix(conta):
     if valor > conta["saldo"]:
         print("Saldo insuficiente.")
         return
+    categoria = escolher_categoria()
+    if categoria is None:
+        return
     conta["saldo"] -= valor
     destino["saldo"] += valor
-    registrar(conta, "pix", valor, destino["chave_pix"])
+    registrar(conta, "pix", valor, destino["chave_pix"], categoria)
+    creditar_pontos(conta, valor)
     print(f"Pix de R$ {valor:.2f} enviado para {destino['nome']}. Saldo: R$ {conta['saldo']:.2f}")
 
 
@@ -49,12 +60,18 @@ def mostrar_extrato(conta):
         return
     print("Extrato (mais recente primeiro):")
     for transacao in reversed(conta["extrato"]):
-        print(f"{transacao['tipo']} - R$ {transacao['valor']:.2f}")
+        linha = f"{transacao['tipo']} - R$ {transacao['valor']:.2f}"
+        if transacao["categoria"] is not None:
+            linha += f" - {transacao['categoria']}"
+        print(linha)
 
 
 def estornar(conta):
     if not conta["extrato"]:
         print("Nao ha transacao para estornar.")
+        return
+    if conta["extrato"][-1]["tipo"] not in ESTORNAVEIS:
+        print("A ultima transacao nao pode ser estornada.")
         return
     transacao = conta["extrato"].pop()
     tipo, valor = transacao["tipo"], transacao["valor"]
@@ -66,4 +83,6 @@ def estornar(conta):
         destino = buscar_por_chave(transacao["destino"])
         if destino is not None:
             destino["saldo"] -= valor
+    if tipo in ("saque", "pix"):
+        debitar_pontos(conta, valor)
     print(f"Estorno de {tipo} no valor de R$ {valor:.2f}. Saldo: R$ {conta['saldo']:.2f}")

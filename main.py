@@ -1,6 +1,10 @@
 from banco import acessar_conta, cadastrar_conta, mostrar_saldo
 from boletos import agendar_boleto, liquidar_pagamentos, ver_fila
+from cofrinhos import (criar_cofrinho, guardar_no_cofrinho, resgatar_do_cofrinho,
+                       simular_rendimento, ver_cofrinhos)
 from operacoes import depositar, estornar, mostrar_extrato, pix, sacar
+from pontos import consultar_pontos, resgatar_cashback
+from relatorio import relatorio_categoria
 
 
 def menu_conta(conta):
@@ -8,7 +12,11 @@ def menu_conta(conta):
         print(f"\n=== Conta {conta['numero']} - {conta['nome']} ===")
         print("1 - Consultar saldo\n2 - Depositar\n3 - Sacar\n4 - Pix\n"
               "5 - Ver extrato\n6 - Estornar ultima transacao\n7 - Agendar boleto\n"
-              "8 - Ver fila de boletos\n9 - Liquidar pagamentos\n10 - Voltar")
+              "8 - Ver fila de boletos\n9 - Liquidar pagamentos\n"
+              "10 - Relatorio por categoria\n11 - Consultar pontos\n"
+              "12 - Resgatar cashback\n13 - Criar caixinha\n"
+              "14 - Guardar na caixinha\n15 - Resgatar da caixinha\n"
+              "16 - Ver caixinhas\n17 - Simular rendimento\n18 - Voltar")
         opcao = input("Escolha uma opcao: ")
         if opcao == "1":
             mostrar_saldo(conta)
@@ -29,6 +37,22 @@ def menu_conta(conta):
         elif opcao == "9":
             liquidar_pagamentos(conta)
         elif opcao == "10":
+            relatorio_categoria(conta)
+        elif opcao == "11":
+            consultar_pontos(conta)
+        elif opcao == "12":
+            resgatar_cashback(conta)
+        elif opcao == "13":
+            criar_cofrinho(conta)
+        elif opcao == "14":
+            guardar_no_cofrinho(conta)
+        elif opcao == "15":
+            resgatar_do_cofrinho(conta)
+        elif opcao == "16":
+            ver_cofrinhos(conta)
+        elif opcao == "17":
+            simular_rendimento(conta)
+        elif opcao == "18":
             break
         else:
             print("Opcao invalida.")

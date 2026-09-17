@@ -1,5 +1,5 @@
 from banco import registrar
-from entrada import ler_valor
+from entrada import escolher_categoria, ler_valor
 
 
 def agendar_boleto(conta):
@@ -10,8 +10,11 @@ def agendar_boleto(conta):
     valor = ler_valor("Valor do boleto: R$ ")
     if valor is None:
         return
-    conta["boletos"].append({"descricao": descricao, "valor": valor})
-    print(f"Boleto '{descricao}' de R$ {valor:.2f} agendado.")
+    categoria = escolher_categoria()
+    if categoria is None:
+        return
+    conta["boletos"].append({"descricao": descricao, "valor": valor, "categoria": categoria})
+    print(f"Boleto '{descricao}' de R$ {valor:.2f} agendado em {categoria}.")
 
 
 def ver_fila(conta):
@@ -20,7 +23,7 @@ def ver_fila(conta):
         return
     print("Fila de boletos (proximo a pagar primeiro):")
     for boleto in conta["boletos"]:
-        print(f"{boleto['descricao']} - R$ {boleto['valor']:.2f}")
+        print(f"{boleto['descricao']} - R$ {boleto['valor']:.2f} - {boleto['categoria']}")
 
 
 def liquidar_pagamentos(conta):
@@ -34,5 +37,5 @@ def liquidar_pagamentos(conta):
             break
         conta["boletos"].pop(0)
         conta["saldo"] -= proximo["valor"]
-        registrar(conta, "boleto", proximo["valor"], None)
+        registrar(conta, "boleto", proximo["valor"], None, proximo["categoria"])
         print(f"Boleto '{proximo['descricao']}' pago. Saldo: R$ {conta['saldo']:.2f}")

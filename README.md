@@ -24,6 +24,9 @@ Na v2 o codigo foi separado em arquivos por assunto, cada um com funcoes pequena
 - `entrada.py` - a leitura e validacao dos valores digitados
 - `operacoes.py` - deposito, saque, pix, extrato e estorno
 - `boletos.py` - a fila de boletos
+- `relatorio.py` - a soma dos gastos por categoria
+- `pontos.py` - os BytePoints e o cashback
+- `cofrinhos.py` - as caixinhas de investimento
 
 ## Funcionalidades
 
@@ -37,6 +40,15 @@ Na v2 o codigo foi separado em arquivos por assunto, cada um com funcoes pequena
 - Cadastrar conta (recusa nome ou chave em branco e chave pix repetida)
 - Acessar conta pelo numero
 - PIX entre contas (recusa chave inexistente e transferencia para a propria conta)
+
+### Nivel 2 intermediario (v2)
+- Categoria obrigatoria no saque, no pix e no boleto (Alimentacao, Transporte, Lazer,
+  Contas e Outros)
+- Relatorio de gastos por categoria, com o valor e o percentual de cada uma
+- BytePoints: 1 ponto a cada R$ 10,00 em saques e transferencias
+- Resgate de cashback em multiplos de 100 pontos (100 pontos = R$ 5,00)
+- Caixinhas de investimento: criar com um objetivo, guardar, resgatar e simular o
+  rendimento de 0,5% no mes
 
 ### Nivel 3
 - Extrato com todas as transacoes da conta

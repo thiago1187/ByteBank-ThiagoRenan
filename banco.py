@@ -26,7 +26,7 @@ def cadastrar_conta():
         return
     contas.append({
         "numero": len(contas) + 1, "nome": nome, "chave_pix": chave_pix,
-        "saldo": 0.0, "extrato": [], "boletos": [],
+        "saldo": 0.0, "extrato": [], "boletos": [], "pontos": 0, "cofrinhos": {},
     })
     print(f"Conta {len(contas)} criada para {nome}.")
 
@@ -50,5 +50,7 @@ def mostrar_saldo(conta):
     print(f"{conta['nome']}: R$ {conta['saldo']:.2f}")
 
 
-def registrar(conta, tipo, valor, destino):
-    conta["extrato"].append({"tipo": tipo, "valor": valor, "destino": destino})
+def registrar(conta, tipo, valor, destino, categoria=None):
+    conta["extrato"].append({
+        "tipo": tipo, "valor": valor, "destino": destino, "categoria": categoria,
+    })
