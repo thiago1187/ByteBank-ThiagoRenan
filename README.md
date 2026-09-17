@@ -27,6 +27,9 @@ Na v2 o codigo foi separado em arquivos por assunto, cada um com funcoes pequena
 - `relatorio.py` - a soma dos gastos por categoria
 - `pontos.py` - os BytePoints e o cashback
 - `cofrinhos.py` - as caixinhas de investimento
+- `credito.py` - o cartao de credito e a fatura
+- `moedas.py` - a carteira de moedas estrangeiras
+- `emprestimos.py` - o emprestimo pre-aprovado e as parcelas
 
 ## Funcionalidades
 
@@ -49,6 +52,11 @@ Na v2 o codigo foi separado em arquivos por assunto, cada um com funcoes pequena
 - Resgate de cashback em multiplos de 100 pontos (100 pontos = R$ 5,00)
 - Caixinhas de investimento: criar com um objetivo, guardar, resgatar e simular o
   rendimento de 0,5% no mes
+- Cartao de credito: comprar dentro do limite disponivel, ver a fatura com as compras e
+  pagar a fatura com o saldo da conta, restabelecendo o limite
+- Carteira multimoedas: comprar e vender USD, EUR e BTC por taxas fixas
+- Emprestimo pre-aprovado de ate 3x o saldo, com simulacao de juros simples de 2% ao
+  mes, contratacao parcelada e pagamento de parcela
 
 ### Nivel 3
 - Extrato com todas as transacoes da conta
