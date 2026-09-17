@@ -58,3 +58,10 @@ def registrar(conta, tipo, valor, destino, categoria=None):
     conta["extrato"].append({
         "tipo": tipo, "valor": valor, "destino": destino, "categoria": categoria,
     })
+
+
+def resumo_conta(conta):
+    guardado = sum(cofrinho["saldo"] for cofrinho in conta["cofrinhos"].values())
+    return (f"Saldo: R$ {conta['saldo']:.2f} | Guardado: R$ {guardado:.2f} | "
+            f"Fatura: R$ {conta['fatura']:.2f} | {conta['pontos']} BytePoints | "
+            f"{len(conta['boletos'])} boleto(s) na fila")
