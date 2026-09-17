@@ -3,6 +3,7 @@
 ## Integrantes
 
 - Thiago Alves
+- Renan Rocha
 
 ## Descricao
 
