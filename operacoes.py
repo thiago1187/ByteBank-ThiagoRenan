@@ -49,6 +49,7 @@ def pix(conta):
         return
     conta["saldo"] -= valor
     destino["saldo"] += valor
+    registrar(destino, "pix_recebido", valor, conta["chave_pix"])
     registrar(conta, "pix", valor, destino["chave_pix"], categoria)
     creditar_pontos(conta, valor)
     print(f"Pix de R$ {valor:.2f} enviado para {destino['nome']}. Saldo: R$ {conta['saldo']:.2f}")
@@ -75,6 +76,12 @@ def estornar(conta):
         return
     transacao = conta["extrato"].pop()
     tipo, valor = transacao["tipo"], transacao["valor"]
+    if tipo == "pix":
+        destino = buscar_por_chave(transacao["destino"])
+        if destino is not None and destino["saldo"] < valor:
+            print("O destino nao tem saldo para o estorno.")
+            conta["extrato"].append(transacao)
+            return
     if tipo == "deposito":
         conta["saldo"] -= valor
     else:
