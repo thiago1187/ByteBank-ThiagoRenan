@@ -43,8 +43,7 @@ Na v2 o codigo foi separado em arquivos por assunto, cada um com funcoes pequena
 ### Nivel 2
 - Cadastrar conta (recusa nome ou chave em branco e chave pix repetida)
 - Acessar conta pelo numero
-- PIX entre contas (recusa chave inexistente e transferencia para a propria conta)
-
+- PIX entre contas (recusa chave inexistente e transferencia para a propria conta). O PIX aparece no extrato de quem enviou e de quem recebeu
 ### Nivel 2 intermediario (v2)
 - Categoria obrigatoria no saque, no pix e no boleto (Alimentacao, Transporte, Lazer,
   Contas e Outros)
@@ -61,7 +60,7 @@ Na v2 o codigo foi separado em arquivos por assunto, cada um com funcoes pequena
 
 ### Nivel 3
 - Extrato com todas as transacoes da conta
-- Estorno da ultima transacao
+- Estorno da ultima transacao (no PIX, so estorna se quem recebeu ainda tiver o saldo)
 - Agendar boletos
 - Ver a fila de boletos
 - Liquidar pagamentos na ordem de agendamento
