@@ -2,6 +2,7 @@ from banco import buscar_por_chave, registrar
 from entrada import escolher_categoria, ler_valor
 from pontos import creditar_pontos, debitar_pontos
 
+LIMITE_SAQUE = 2000.0
 ESTORNAVEIS = ["deposito", "saque", "pix", "boleto"]
 
 
@@ -17,6 +18,9 @@ def depositar(conta):
 def sacar(conta):
     valor = ler_valor("Valor do saque: R$ ")
     if valor is None:
+        return
+    if valor > LIMITE_SAQUE:
+        print(f"O limite por saque e de R$ {LIMITE_SAQUE:.2f}.")
         return
     if valor > conta["saldo"]:
         print("Saldo insuficiente.")
