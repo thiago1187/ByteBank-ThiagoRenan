@@ -1,4 +1,5 @@
-from banco import acessar_conta, cadastrar_conta, mostrar_saldo, resumo_conta
+from analisador_log import mostrar_analise_log
+from banco import acessar_conta, cadastrar_conta, contas, mostrar_saldo, resumo_conta
 from boletos import agendar_boleto, liquidar_pagamentos, ver_fila
 from cofrinhos import (criar_cofrinho, guardar_no_cofrinho, resgatar_do_cofrinho,
                        simular_rendimento, ver_cofrinhos)
@@ -7,6 +8,7 @@ from emprestimos import (contratar_emprestimo, pagar_parcela_emprestimo,
                          simular_emprestimo)
 from moedas import comprar_moeda_estrangeira, vender_moeda_estrangeira, ver_carteira
 from operacoes import depositar, estornar, mostrar_extrato, pix, sacar
+from persistencia import salvar_contas_txt
 from pontos import consultar_pontos, resgatar_cashback
 from relatorio import relatorio_categoria
 
@@ -71,7 +73,8 @@ ACOES_CONTA = {
 MENU_INICIAL = [
     ("1", "Cadastrar conta"),
     ("2", "Acessar conta"),
-    ("3", "Sair"),
+    ("3", "Analisar log HTTP"),
+    ("4", "Sair"),
 ]
 
 
@@ -101,20 +104,25 @@ def menu_inicial():
     while True:
         print("\n=== ByteBank ===")
         imprimir_opcoes(MENU_INICIAL)
-        opcao = input("\nEscolha uma opcao (1 a 3): ").strip()
+        opcao = input("\nEscolha uma opcao (1 a 4): ").strip()
         if opcao == "1":
             cadastrar_conta()
+            salvar_contas_txt(contas)
         elif opcao == "2":
             conta = acessar_conta()
             if conta is None:
                 print("Conta nao encontrada.")
             else:
                 menu_conta(conta)
+                salvar_contas_txt(contas)
         elif opcao == "3":
+            mostrar_analise_log()
+        elif opcao == "4":
+            salvar_contas_txt(contas)
             print("Saindo...")
             break
         else:
-            print("Opcao invalida. Digite um numero de 1 a 3.")
+            print("Opcao invalida. Digite um numero de 1 a 4.")
 
 
 menu_inicial()

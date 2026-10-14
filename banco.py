@@ -1,6 +1,8 @@
+from persistencia import carregar_contas_txt
+
 LIMITE_CREDITO_INICIAL = 1000.0
 
-contas = []
+contas = carregar_contas_txt()
 
 
 def buscar_por_chave(chave):
