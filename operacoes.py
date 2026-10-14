@@ -2,6 +2,7 @@ from banco import buscar_por_chave, registrar
 from entrada import escolher_categoria, ler_valor
 from pontos import creditar_pontos, debitar_pontos
 
+LIMITE_SAQUE = 2000.0
 ESTORNAVEIS = ["deposito", "saque", "pix", "boleto"]
 
 
@@ -17,6 +18,9 @@ def depositar(conta):
 def sacar(conta):
     valor = ler_valor("Valor do saque: R$ ")
     if valor is None:
+        return
+    if valor > LIMITE_SAQUE:
+        print(f"O limite por saque e de R$ {LIMITE_SAQUE:.2f}.")
         return
     if valor > conta["saldo"]:
         print("Saldo insuficiente.")
@@ -49,6 +53,7 @@ def pix(conta):
         return
     conta["saldo"] -= valor
     destino["saldo"] += valor
+    registrar(destino, "pix_recebido", valor, conta["chave_pix"])
     registrar(conta, "pix", valor, destino["chave_pix"], categoria)
     creditar_pontos(conta, valor)
     print(f"Pix de R$ {valor:.2f} enviado para {destino['nome']}. Saldo: R$ {conta['saldo']:.2f}")
@@ -75,6 +80,12 @@ def estornar(conta):
         return
     transacao = conta["extrato"].pop()
     tipo, valor = transacao["tipo"], transacao["valor"]
+    if tipo == "pix":
+        destino = buscar_por_chave(transacao["destino"])
+        if destino is not None and destino["saldo"] < valor:
+            print("O destino nao tem saldo para o estorno.")
+            conta["extrato"].append(transacao)
+            return
     if tipo == "deposito":
         conta["saldo"] -= valor
     else:
